@@ -18,11 +18,32 @@ jobs:
 # for selected jobs, disable all and disable the selected needs
 
  all:
+  #if: false
+  if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Runall jobs"
+
+ slow:
+  #if: false
+  if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Run slow jobs"
+
+ deprecated:
   if: false
   #if: true
   runs-on: ubuntu-latest
   steps:
-    - run: echo "Runall jobs"
+    - run: echo "Run deprecated jobs"
+
+ disabled:
+  if: false
+  #if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Run disabled jobs"
 
 # linux ----------------------------------------------------------------
  jpcre2linux:
@@ -210,8 +231,7 @@ jobs:
 # rpi64 ----------------------------------------------------------------
  jpcre2rpi64:
   name: JPCRE2 (Raspberry)
-  needs: all
-  if: ${{ false }}
+  needs: [all, disabled]
   runs-on: ubuntu-22.04
   steps:
    - name: Checkout Git repository
@@ -255,8 +275,7 @@ jobs:
 # rpi32 ----------------------------------------------------------------
  jpcre2rpi32:
   name: JPCRE2 (Raspberry32)
-  needs: all
-  if: ${{ false }}
+  needs: [all, disabled]
   runs-on: ubuntu-22.04
   steps:
    - name: Checkout Git repository
@@ -301,59 +320,6 @@ jobs:
 
 # openbsd --------------------------------------------------------------
  jpcre2openbsd:
-  name: JPCRE2 (OpenBSD vmactions)
-  needs: all
-  if: ${{ false }}
-  runs-on: macos-15-intel
-  steps:
-   - name: Checkout Git repository
-     uses: actions/checkout@v4
-
-   - name: Build JPCRE2 (OpenBSD)
-     uses: vmactions/openbsd-vm@v0
-     with:
-      usesh: true
-      sync: sshfs
-      prepare: |
-       pkg_add -u
-       rdate time.cloudflare.com || true
-       pkg_add curl wget zip gmake nasm pcre2 libedit automake-1.15.1 libtool
-
-      run: |
-       rm -f jobdone
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       echo "Host *" >>~/.ssh/config || true
-       echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       cat ~/.ssh/config || true
-       export CC=clang
-       ls -l /usr/local/bin/auto*
-       export AUTOMAKE_VERSION=1.15
-       export AUTOCONF_VERSION=2.69
-       script/pcre2-copysrc.sh openbsd || exit 1
-       script/pcre2-build.sh openbsd || exit 1
-       ls -l j64
-       zip -r pcre2-obsd64.zip j64
-       touch jobdone
-
-   - name: Check Status (OpenBSD)
-     run: |
-      test -f jobdone || exit 1
-
-   - name: Release JPCRE2 (OpenBSD)
-     uses: ncipollo/release-action@v1
-     with:
-      tag: build
-      artifacts: "pcre2-obsd64.zip"
-      token: ${{ secrets.GITHUB_TOKEN }}
-      allowUpdates: true
-      replacesArtifacts: true
-
-# openbsd --------------------------------------------------------------
- jpcre2openbsd2:
   name: JPCRE2 (OpenBSD cross-platform-actions)
   needs: all
   runs-on: macos-15-intel
@@ -460,56 +426,6 @@ jobs:
 
 # freebsd --------------------------------------------------------------
  jpcre2freebsd:
-  name: JPCRE2 (FreeBSD vmactions)
-  needs: all
-  if: ${{ false }}
-  runs-on: macos-15-intel
-  steps:
-   - name: Checkout Git repository
-     uses: actions/checkout@v4
-
-   - name: Build JPCRE2 (FreeBSD)
-     uses: vmactions/freebsd-vm@v0
-     with:
-      usesh: true
-      sync: sshfs
-      prepare: |
-       pkg upgrade -y
-       rdate time.cloudflare.com || true
-       pkg install -y curl wget zip gmake nasm pcre2 libedit automake libtool
-
-      run: |
-       rm -f jobdone
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       echo "Host *" >>~/.ssh/config || true
-       echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       cat ~/.ssh/config || true
-       export CC=clang
-       script/pcre2-copysrc.sh freebsd || exit 1
-       script/pcre2-build.sh freebsd || exit 1
-       ls -l j64
-       zip -r pcre2-fbsd64.zip j64
-       touch jobdone
-
-   - name: Check Status (FreeBSD)
-     run: |
-      test -f jobdone || exit 1
-
-   - name: Release JPCRE2 (FreeBSD)
-     uses: ncipollo/release-action@v1
-     with:
-      tag: build
-      artifacts: "pcre2-fbsd64.zip"
-      token: ${{ secrets.GITHUB_TOKEN }}
-      allowUpdates: true
-      replacesArtifacts: true
-
-# freebsd --------------------------------------------------------------
- jpcre2freebsd2:
   name: JPCRE2 (FreeBSD cross-platform-actions)
   needs: all
   runs-on: ubuntu-latest
@@ -748,7 +664,7 @@ jobs:
  webhook:
   name: Run Webhook
   runs-on: ubuntu-22.04
-  needs: [jpcre2linux, jpcre2macos, jpcre2macosarm, jpcre2rpi64arm, jpcre2rpi32arm, jpcre2winx64, jpcre2freebsd2, jpcre2freebsdarm64, jpcre2openbsd2, jpcre2openbsdarm64]
+  needs: [jpcre2linux, jpcre2macos, jpcre2macosarm, jpcre2rpi64arm, jpcre2rpi32arm, jpcre2winx64, jpcre2freebsd, jpcre2freebsdarm64, jpcre2openbsd, jpcre2openbsdarm64]
   steps:
    - name: update server
      uses: distributhor/workflow-webhook@v2
