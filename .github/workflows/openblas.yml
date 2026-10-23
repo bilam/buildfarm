@@ -213,14 +213,14 @@ jobs:
 
 # rpi32 ----------------------------------------------------------------
  oberpi32:
-  name: OPENBLAS (Raspberry32)
+  name: OPENBLAS (Raspberry 32)
 #  needs: [all, disabled]
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
      uses: actions/checkout@v6
 
-   - name: Build OPENBLAS (Raspberry32)
+   - name: Build OPENBLAS (Raspberry 32)
      uses: pguyot/arm-runner-action@v2
      with:
       cpu: arm1176
@@ -232,10 +232,18 @@ jobs:
        apt-get update -y
        apt-get install --no-install-recommends -y clang zip git
        export MAKETARGET="${{ env.MAKETARGET }}"
-       export CC=clang
+       export CC=gcc
        script/openblas-make.sh raspberry armv6l || exit 1
+       rm -rf j32
+       mkdir -p j32
+       mv openblas-rpi32.zip j32/openblas-rpi32c.zip
 
-   - name: Release OPENBLAS (Raspberry32)
+   - name: Compress Files (Raspberry32)
+     run: |
+      ls -l j32
+      mv j32/* .
+
+   - name: Release OPENBLAS (Raspberry 32)
      if: ${{ env.RELEASE == 'true' }}
      uses: ncipollo/release-action@v1
      with:
