@@ -341,7 +341,7 @@ jobs:
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
        sudo pkg install -y curl wget zip gmake git
-       # export MAKETARGET="${{ env.MAKETARGET }}"
+       export MAKETARGET="${{ env.MAKETARGET }}"
        export CC=clang
        script/openblas-make.sh freebsd || exit 1
 
@@ -761,7 +761,7 @@ jobs:
 # windows msys2 arm64 --------------------------------------------------
  obwin-msys2-arm64:
   name: OPENBLAS (Windows MSYS2 arm64)
-#  needs: all
+  needs: all
   runs-on: windows-11-arm
   steps:
    - name: Checkout Git repository

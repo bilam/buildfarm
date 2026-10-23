@@ -17,6 +17,8 @@ x86() {
 $make clean
 $make \
     TARGET=BULLDOZER BINARY=32\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     -j4 ${MAKETARGET}
@@ -26,8 +28,10 @@ cp libopenblas.${ext} libs/libopenblas_32.${ext}
 x86_64() {
 ## This will build for x86_64 
 $make clean
-$make \
+BUILD_WITHOUT_CBLAS=0 $make \
     TARGET=NEHALEM BINARY=64\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     -j4 ${MAKETARGET}
@@ -37,8 +41,10 @@ cp libopenblas.${ext} libs/libopenblas.${ext}
 x86_64avx2() {
 ## This will build for x86_64 
 $make clean
-$make \
+BUILD_WITHOUT_CBLAS=0 $make \
     TARGET=HASWELL BINARY=64\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     -j4 ${MAKETARGET}
@@ -50,6 +56,8 @@ arm64() {
 $make clean
 $make \
     TARGET=CORTEXA57 BINARY=64\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     -j4 ${MAKETARGET}
@@ -60,6 +68,8 @@ rpi32() {
 $make clean
 $make \
     TARGET=ARMV6 BINARY=32 \
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     HOSTCC=gcc \
@@ -71,6 +81,8 @@ android_armv7() {
 $make clean
 $make \
     TARGET=ARMV7 BINARY=32 \
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     CC="$TOOLCHAIN"/bin/armv7a-linux-androideabi24-clang \
@@ -85,6 +97,8 @@ android_armv8() {
 $make clean
 $make \
     TARGET=CORTEXA57 BINARY=64 \
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     CC="$TOOLCHAIN"/bin/aarch64-linux-android24-clang \
@@ -98,6 +112,8 @@ android_x86() {
 $make clean
 $make \
     TARGET=ATOM BINARY=32\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     CC="$TOOLCHAIN"/bin/i686-linux-android24-clang \
@@ -112,6 +128,8 @@ android_x64() {
 $make clean
 $make \
     TARGET=ATOM BINARY=64\
+    NO_STATIC=1 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     CC="$TOOLCHAIN"/bin/x86_64-linux-android24-clang \
@@ -127,6 +145,8 @@ wasm32() {
 $make clean
 $make \
     TARGET=WASM128_GENERIC BINARY=32\
+    NO_STATIC=0 \
+    NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     USE_THREAD=0 \
