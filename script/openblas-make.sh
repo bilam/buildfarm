@@ -9,7 +9,7 @@ set -vex
 CC=${CC-clang}
 export CC
 
-if [ "$1" = "darwin" ] || [ "$1" = "android" ] || [ "$1" = "freebsd" ] || [ "$1" = "openbsd" ] ; then
+if [ "$1" = "darwin" ] || [ "$1" = "android" ] || [ "$1" = "openbsd" ] || [ "$1" = "freebsd" ] ; then
  sed="${sed:=gsed}"
 else
  sed="${sed:=sed}"

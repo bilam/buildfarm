@@ -269,7 +269,7 @@ jobs:
        sudo pkg_add curl wget zip gmake gsed git
        export MAKETARGET="${{ env.MAKETARGET }}"
        export CC=clang
-       script/openblas-make.sh openbsd || exit 1
+       script/openblas-make.sh openbsd x86_64 || exit 1
 
    - name: Release OPENBLAS (OpenBSD)
      if: ${{ env.RELEASE == 'true' }}
@@ -343,7 +343,7 @@ jobs:
        sudo pkg install -y curl wget zip gmake gsed git
        export MAKETARGET="${{ env.MAKETARGET }}"
        export CC=clang
-       script/openblas-make.sh freebsd || exit 1
+       script/openblas-make.sh freebsd x86_64 || exit 1
 
    - name: Release OPENBLAS (FreeBSD)
      if: ${{ env.RELEASE == 'true' }}
