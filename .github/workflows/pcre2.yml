@@ -184,7 +184,7 @@ jobs:
 # rpi32arm -------------------------------------------------------------
  jpcre2rpi32arm:
   name: JPCRE2 (Linux arm32)
-  needs: all
+  needs: [all, disabled]
   runs-on: ubuntu-22.04-arm
   steps:
    - name: Checkout Git repository
@@ -259,7 +259,7 @@ jobs:
 # rpi32 ----------------------------------------------------------------
  jpcre2rpi32:
   name: JPCRE2 (Raspberry32)
-  needs: [all, disabled]
+  needs: all
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -270,12 +270,12 @@ jobs:
      with:
       cpu: arm1176
       cpu_info: cpuinfo/raspberrypi_zero2_w
-      base_image: raspbian_lite:2020-02-13
+      base_image: raspios_lite:2023-05-03
       image_additional_mb: 1024
       copy_artifact_path: j32
       commands: |
        apt-get install --no-install-recommends -y zip autoconf automake libtool
-       export CC=gcc
+       export CC=clang
        script/pcre2-build.sh raspberry || exit 1
        find j32 -type d -exec chmod a+rwx {} \;
        find j32 -type f -exec chmod a+rw {} \;
@@ -305,7 +305,7 @@ jobs:
  jpcre2openbsd:
   name: JPCRE2 (OpenBSD cross-platform-actions)
   needs: all
-  runs-on: macos-15-intel
+  runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
      uses: actions/checkout@v4
@@ -324,14 +324,6 @@ jobs:
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
        sudo pkg_add curl wget zip gmake nasm pcre2 libedit automake-1.15.1 libtool
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       sudo echo "Host *" >>~/.ssh/config || true
-       sudo echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       sudo echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       sudo cat ~/.ssh/config || true
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
@@ -377,14 +369,6 @@ jobs:
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
        sudo pkg_add curl wget zip gmake gmp pcre2 libedit automake-1.15.1 libtool
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       sudo echo "Host *" >>~/.ssh/config || true
-       sudo echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       sudo echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       sudo cat ~/.ssh/config || true
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
@@ -431,14 +415,6 @@ jobs:
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
        sudo pkg install -y curl wget zip gmake nasm pcre2 libedit automake libtool
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       sudo echo "Host *" >>~/.ssh/config || true
-       sudo echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       sudo echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       sudo cat ~/.ssh/config || true
        export CC=clang
        script/pcre2-build.sh freebsd || exit 1
        ls -l j64
@@ -482,14 +458,6 @@ jobs:
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
        sudo pkg install -y curl wget zip gmake nasm pcre2 libedit automake libtool
-       /sbin/ldconfig -r
-       ls -al ~/
-       ls -al ~/.ssh
-       sudo echo "Host *" >>~/.ssh/config || true
-       sudo echo " ServerAliveInterval 20" >>~/.ssh/config || true
-       sudo echo " ServerAliveCountMax 2000000" >>~/.ssh/config || true
-       echo "client ssh config"
-       sudo cat ~/.ssh/config || true
        export CC=clang
        script/pcre2-build.sh freebsd || exit 1
        ls -l j64
