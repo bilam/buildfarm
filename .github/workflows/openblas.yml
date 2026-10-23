@@ -311,7 +311,8 @@ jobs:
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
        sudo pkg_add curl wget zip gmake gsed git
-       export MAKETARGET="${{ env.MAKETARGET }}"
+#       export MAKETARGET="${{ env.MAKETARGET }}"
+       export MAKETARGET="libs netlib shared"
        export CC=clang
        script/openblas-make.sh openbsd arm64 || exit 1
 
@@ -443,10 +444,18 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
+
+   - name: Setup Node.js (wasm)
+     uses: actions/setup-node@v4
+     with:
+       node-version: '22'
 
    - name: Setup Environment (wasm)
-     uses: mymindstorm/setup-emsdk@v11
+     uses: emscripten-core/setup-emsdk@v16
+     with:
+       version: 4.0.10
+       actions-cache-folder: emsdk-cache
 
    - name: Build OPENBLAS (wasm)
      env:
@@ -454,7 +463,7 @@ jobs:
       CC: emcc
       AR: emar
       RANLIB: emranlib
-      HOSTCC: emcc
+      HOSTCC: clang
      run: |
       script/openblas-make.sh wasm || exit 1
 

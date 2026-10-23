@@ -150,13 +150,13 @@ wasm32() {
 $make clean
 $make \
     TARGET=WASM128_GENERIC BINARY=32\
-    NO_STATIC=0 \
+    WASM_RELAXED_SIMD= 0 \
     NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
     USE_THREAD=0 \
     -j4 ${MAKETARGET}
-cp libopenblas.a libs/libopenblas-wasm.a
+cp libopenblas*.a libs/.
 }
 
 mkdir -p OpenBLAS/libs
