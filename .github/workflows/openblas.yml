@@ -24,8 +24,8 @@ jobs:
 # for selected jobs, disable all and disable the selected needs
 
  all:
-  #if: false
-  if: true
+  if: false
+  #if: true
   runs-on: ubuntu-latest
   steps:
     - run: echo "Runall jobs"
@@ -321,7 +321,7 @@ jobs:
 # freebsd --------------------------------------------------------------
  obfreebsd:
   name: OPENBLAS (FreeBSD cross-platform-actions)
-  needs: all
+#  needs: all
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -341,7 +341,7 @@ jobs:
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
        sudo pkg install -y curl wget zip gmake git
-       export MAKETARGET="${{ env.MAKETARGET }}"
+       # export MAKETARGET="${{ env.MAKETARGET }}"
        export CC=clang
        script/openblas-make.sh freebsd || exit 1
 
