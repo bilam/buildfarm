@@ -52,7 +52,7 @@ jobs:
   runs-on: windows-2022
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Windows x64)
      uses: ilammy/msvc-dev-cmd@v1
@@ -84,7 +84,7 @@ jobs:
   runs-on: windows-2022
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Windows x86)
      uses: ilammy/msvc-dev-cmd@v1
@@ -116,7 +116,7 @@ jobs:
   runs-on: windows-2022
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Windows arm64)
      uses: ilammy/msvc-dev-cmd@v1

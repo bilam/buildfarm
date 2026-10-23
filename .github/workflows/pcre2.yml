@@ -52,7 +52,7 @@ jobs:
   runs-on: ubuntu-22.04
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Linux)
      run: script/install-lnx.sh
@@ -86,7 +86,7 @@ jobs:
   runs-on: macos-15-intel
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (macOS)
      run: |
@@ -121,7 +121,7 @@ jobs:
   runs-on: macos-15
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (macOS arm64)
      run: |
@@ -156,7 +156,7 @@ jobs:
   runs-on: ubuntu-22.04-arm
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Linux arm64)
      run: script/install-rpi.sh
@@ -188,7 +188,7 @@ jobs:
   runs-on: ubuntu-22.04-arm
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Linux arm32)
      run: script/install-rpi.sh
@@ -220,7 +220,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build JPCRE2 (Raspberry)
      uses: pguyot/arm-runner-action@v2
@@ -264,7 +264,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build JPCRE2 (Raspberry 32)
      uses: pguyot/arm-runner-action@v2
@@ -310,7 +310,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build JPCRE2 (OpenBSD)
      uses: cross-platform-actions/action@v1.3.0
@@ -355,7 +355,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build, Test JPCRE2 (OpenBSD arm64)
      uses: cross-platform-actions/action@v1.3.0
@@ -400,7 +400,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build JPCRE2 (FreeBSD)
      uses: cross-platform-actions/action@v1.3.0
@@ -443,7 +443,7 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Build JPCRE2 (FreeBSD arm64)
      uses: cross-platform-actions/action@v1.3.0
@@ -486,7 +486,7 @@ jobs:
   runs-on: macos-15
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (android)
      uses: nttld/setup-ndk@v1
@@ -520,14 +520,25 @@ jobs:
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
+
+   - name: Setup Node.js (wasm)
+     uses: actions/setup-node@v4
+     with:
+       node-version: '22'
 
    - name: Setup Environment (wasm)
-     uses: mymindstorm/setup-emsdk@v11
+     uses: emscripten-core/setup-emsdk@v16
+     with:
+       version: 4.0.10
+       actions-cache-folder: emsdk-cache
 
    - name: Build JPCRE2 (wasm)
      env:
       CC: emcc
+      AR: emar
+      RANLIB: emranlib
+      HOSTCC: clang
      run: |
       script/pcre2-build.sh wasm || exit 1
       ls -l j32
@@ -549,7 +560,7 @@ jobs:
   runs-on: windows-2022
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Windows x64)
      uses: ilammy/msvc-dev-cmd@v1
@@ -582,7 +593,7 @@ jobs:
   runs-on: windows-2022
   steps:
    - name: Checkout Git repository
-     uses: actions/checkout@v4
+     uses: actions/checkout@v6
 
    - name: Setup Environment (Windows arm64)
      uses: ilammy/msvc-dev-cmd@v1
