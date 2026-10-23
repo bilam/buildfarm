@@ -24,8 +24,8 @@ jobs:
 # for selected jobs, disable all and disable the selected needs
 
  all:
-  #if: false
-  if: true
+  if: false
+  #if: true
   runs-on: ubuntu-latest
   steps:
     - run: echo "Runall jobs"
@@ -214,7 +214,7 @@ jobs:
 # rpi32 ----------------------------------------------------------------
  oberpi32:
   name: OPENBLAS (Raspberry32)
-  needs: [all, disabled]
+#  needs: [all, disabled]
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -240,7 +240,7 @@ jobs:
      uses: ncipollo/release-action@v1
      with:
       tag: build
-      artifacts: "openblas-rpi32.zip"
+      artifacts: "openblas-rpi32c.zip"
       token: ${{ secrets.GITHUB_TOKEN }}
       allowUpdates: true
       replacesArtifacts: true
