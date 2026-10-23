@@ -150,7 +150,7 @@ wasm32() {
 # $make clean
 $make \
     TARGET=WASM128_GENERIC BINARY=32\
-    WASM_RELAXED_SIMD= 0 \
+    WASM_RELAXED_SIMD=0 \
     NO_LAPACKE=1 \
     NOFORTRAN=1 \
     FIXED_LIBNAME=1 \
