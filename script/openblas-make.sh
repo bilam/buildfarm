@@ -147,7 +147,7 @@ cp libopenblas.${ext} libs/libopenblas-x64.${ext}
 
 # Portable default (SIMD128 only)
 wasm32() {
-$make clean
+# $make clean
 $make \
     TARGET=WASM128_GENERIC BINARY=32\
     WASM_RELAXED_SIMD= 0 \
