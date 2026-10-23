@@ -231,7 +231,7 @@ jobs:
       image_additional_mb: 1024
       copy_artifact_path: j64
       commands: |
-       apt-get install --no-install-recommends -y clang zip autoconf automake libtool
+       apt-get install --no-install-recommends -y clang zip git autoconf automake libtool
        export CC=clang
        script/pcre2-build.sh raspberry || exit 1
        ls -l j64
@@ -274,7 +274,7 @@ jobs:
       image_additional_mb: 1024
       copy_artifact_path: j32
       commands: |
-       apt-get install --no-install-recommends -y zip autoconf automake libtool
+       apt-get install --no-install-recommends -y clang zip git autoconf automake libtool
        export CC=clang
        script/pcre2-build.sh raspberry || exit 1
        find j32 -type d -exec chmod a+rwx {} \;
@@ -323,7 +323,7 @@ jobs:
        rm -f jobdone
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
-       sudo pkg_add curl wget zip gmake nasm pcre2 libedit automake-1.15.1 libtool
+       sudo pkg_add curl wget zip gmake git automake libtool
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
@@ -368,7 +368,7 @@ jobs:
        rm -f jobdone
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
-       sudo pkg_add curl wget zip gmake gmp pcre2 libedit automake-1.15.1 libtool
+       sudo pkg_add curl wget zip gmake git automake libtool
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
@@ -414,7 +414,7 @@ jobs:
        export IGNORE_OSVERSION=yes
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
-       sudo pkg install -y curl wget zip gmake nasm pcre2 libedit automake libtool
+       sudo pkg install -y curl wget zip gmake git automake libtool
        export CC=clang
        script/pcre2-build.sh freebsd || exit 1
        ls -l j64
@@ -457,7 +457,7 @@ jobs:
        export IGNORE_OSVERSION=yes
        sudo pkg upgrade -y
        sudo rdate time.cloudflare.com || true
-       sudo pkg install -y curl wget zip gmake nasm pcre2 libedit automake libtool
+       sudo pkg install -y curl wget zip gmake git automake libtool
        export CC=clang
        script/pcre2-build.sh freebsd || exit 1
        ls -l j64
