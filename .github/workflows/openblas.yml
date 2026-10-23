@@ -31,8 +31,8 @@ jobs:
     - run: echo "Runall jobs"
 
  slow:
-  if: false
-  #if: true
+  #if: false
+  if: true
   runs-on: ubuntu-latest
   steps:
     - run: echo "Run slow jobs"
@@ -85,8 +85,7 @@ jobs:
 # macOS ----------------------------------------------------------------
  obmacos:
   name: OPENBLAS (macOS)
-  if: ${{ false }}
-  needs: all
+  needs: [all, disabled]
   runs-on: macos-15-intel
   steps:
    - name: Checkout Git repository
@@ -96,6 +95,8 @@ jobs:
      run: |
       brew install automake
       brew install libtool
+      brew install gsed
+      brew install zip
       ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize || true
 
    - name: Build OPENBLAS (macOS)
@@ -119,8 +120,7 @@ jobs:
 # macOS arm64 ----------------------------------------------------------
  obmacosarm:
   name: OPENBLAS (macOS arm64)
-  if: ${{ false }}
-  needs: all
+  needs: [all, disabled]
   runs-on: macos-15
   steps:
    - name: Checkout Git repository
@@ -130,6 +130,8 @@ jobs:
      run: |
       brew install automake
       brew install libtool
+      brew install gsed
+      brew install zip
       ln -s /usr/local/bin/glibtoolize /usr/local/bin/libtoolize || true
 
    - name: Build OPENBLAS (macOS arm64)
@@ -153,7 +155,7 @@ jobs:
 # rpi64arm -------------------------------------------------------------
  obrpi64arm:
   name: OPENBLAS (Linux arm64)
-#  needs: all
+  needs: all
   runs-on: ubuntu-24.04-arm
   steps:
    - name: Checkout Git repository
@@ -213,8 +215,7 @@ jobs:
 # rpi32 ----------------------------------------------------------------
  oberpi32:
   name: OPENBLAS (Raspberry32)
-  if: ${{ false }}
-  needs: all
+  needs: [all, disabled]
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -284,8 +285,7 @@ jobs:
 # openbsd arm64 --------------------------------------------------------
  obopenbsdarm64:
   name: OPENBLAS (OpenBSD arm64)
-  if: ${{ false }}
-  needs: all
+  needs: [all, slow]
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -321,7 +321,7 @@ jobs:
 # freebsd --------------------------------------------------------------
  obfreebsd:
   name: OPENBLAS (FreeBSD cross-platform-actions)
-#  needs: all
+  needs: all
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
@@ -358,8 +358,7 @@ jobs:
 # freebsdarm64  --------------------------------------------------------
  obfreebsdarm64:
   name: OPENBLAS (FreeBSD arm64)
-  if: ${{ false }}
-  needs: all
+  needs: [all, slow]
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
