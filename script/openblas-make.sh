@@ -9,6 +9,12 @@ set -vex
 CC=${CC-clang}
 export CC
 
+if [ "$1" = "darwin" ] || [ "$1" = "android" ] || [ "$1" = "freebsd" ] || [ "$1" = "openbsd" ] ; then
+ sed="${sed:=gsed}"
+else
+ sed="${sed:=sed}"
+fi
+
 git clone --depth=1 https://github.com/OpenMathLib/OpenBLAS.git || exit 1
 $sed -i -e "s/,arm arm64 power)/,x86 x86_64 arm arm64 power)/" OpenBLAS/Makefile.system
 
@@ -158,7 +164,6 @@ cd OpenBLAS
 
 if [ "$1" = "linux" ]; then
  make="${make:=make}"
- sed="${sed:=sed}"
  ext="so"
  x86
  x86_64
@@ -168,7 +173,6 @@ if [ "$1" = "linux" ]; then
  cd -
 elif [ "$1" = "raspberry" ]; then
  make="${make:=make}"
- sed="${sed:=sed}"
  ext="so"
  if [ "$2" = "arm64" ]; then
   arm64
@@ -182,7 +186,6 @@ elif [ "$1" = "raspberry" ]; then
  cd -
 elif [ "$1" = "darwin" ]; then
  make="${make:=make}"
- sed="${sed:=gsed}"
  ext="dylib"
  if [ "$2" = "x86_64" ]; then
   x86_64
@@ -196,7 +199,6 @@ elif [ "$1" = "darwin" ]; then
  cd -
 elif [ "$1" = "android" ]; then
  make="${make:=make}"
- sed="${sed:=gsed}"     # mac runner host
  which ndk-build
  export ANDROID_NDK_HOME=/Users/runner/hostedtoolcache/ndk/r24/arm64
  export TOOLCHAIN=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/darwin-x86_64
@@ -210,25 +212,34 @@ elif [ "$1" = "android" ]; then
  cd -
 elif [ "$1" = "openbsd" ]; then
  make="${make:=gmake}"
- sed="${sed:=gsed}"
  ext="so"
- x86_64
- x86_64avx2
- cd libs
- zip ../../openblas-obsd.zip *
+ if [ "$2" = "x86_64" ]; then
+  x86_64
+  86_64avx2
+  cd libs
+  zip ../../openblas-obsd.zip *
+ else
+  arm64
+  cd libs
+  zip ../../openblas-obsdarm64.zip *
+ fi
  cd -
 elif [ "$1" = "freebsd" ]; then
  make="${make:=gmake}"
- sed="${sed:=gsed}"
  ext="so"
- x86_64
- x86_64avx2
- cd libs
- zip ../../openblas-fbsd.zip *
+ if [ "$2" = "x86_64" ]; then
+  x86_64
+  x86_64avx2
+  cd libs
+  zip ../../openblas-fbsd.zip *
+ else
+  arm64
+  cd libs
+  zip ../../openblas-fbsdarm64.zip *
+ fi
  cd -
 elif [ "$1" = "windows" ]; then
  make="${make:=make}"
- sed="${sed:=sed}"
  ext="dll"
  if [ "$2" = "x86_64" ]; then
   x86_64
@@ -247,7 +258,6 @@ elif [ "$1" = "windows" ]; then
  cd -
 elif [ "$1" = "wasm" ]; then
  make="${make:=make}"
- sed="${sed:=sed}"
  ext="a"
  wasm32
  cd libs
