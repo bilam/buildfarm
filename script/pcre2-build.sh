@@ -9,6 +9,8 @@ set -vex
 CC=${CC-clang}
 export CC
 
+git clone --depth=1 https://github.com/PCRE2Project/pcre2.git || exit 1
+
 mkdir -p $HOME/temp
 
 if [ "$1" = "linux" ]; then
@@ -74,7 +76,7 @@ fi
 
 if [ "$1" = "wasm" ]; then
 script/pcre2-makewasm.sh
-cp pcre2-master/.libs/libpcre2-8.a j32
+cp pcre2/.libs/libpcre2-8.a j32
 find j32 -type d -exec chmod 755 {} \;
 find j32 -type f -exec chmod 644 {} \;
 exit 0
@@ -82,7 +84,7 @@ fi
 
 if [ "$1" = "win" ]; then
 script/pcre2-makewin.sh
-cp pcre2-master/.libs/libjpcre2.dll j64
+cp pcre2/.libs/libjpcre2.dll j64
 ls -l j64
 exit 0
 fi
@@ -100,18 +102,18 @@ fi
 
 if [ $m64 -eq 1 ]; then
 if [ "$1" = "darwin" ]; then
-cp pcre2-master/.libs/libpcre2-8.dylib j64
+cp pcre2/.libs/libpcre2-8.dylib j64
 elif [ "$1" = "openbsd" ]; then
-cp pcre2-master/.libs/libpcre2-8.so.* j64
+cp pcre2/.libs/libpcre2-8.so.* j64
 elif [ "$1" = "linux" ]; then
-cp pcre2-master/.libs/libpcre2-8.so.* j64
+cp pcre2/.libs/libpcre2-8.so.* j64
 mkdir -p j32
-cp pcre2-master/.libs-32/libpcre2-8.so.* j32
+cp pcre2/.libs-32/libpcre2-8.so.* j32
 else
-cp pcre2-master/.libs/libpcre2-8.so j64
+cp pcre2/.libs/libpcre2-8.so j64
 fi
 else
-cp pcre2-master/.libs/libpcre2-8.so j32
+cp pcre2/.libs/libpcre2-8.so j32
 fi
 
 if [ -d j64 ]; then

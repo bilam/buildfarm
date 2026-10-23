@@ -7,7 +7,7 @@ set -evx
 cd "$(dirname "$0")"
 P="$(pwd)"
 
-S=../pcre2-master
+S=../pcre2
 # ----------------
 
 cd $S
@@ -31,9 +31,9 @@ cd ..
 
 cd $P 
 cd ..
-cp pcre2-android/Android.mk pcre2-master/.
+cp pcre2-android/Android.mk pcre2/.
 cd pcre2-android/jni
-ln -sf ../../pcre2-master .
+ln -sf ../../pcre2 .
 cd ..
 
 ndk-build

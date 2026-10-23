@@ -7,7 +7,7 @@ set -evx
 cd "$(dirname "$0")"
 P="$(pwd)"
 
-S=../pcre2-master
+S=../pcre2
 # ----------------
 
 cd $S

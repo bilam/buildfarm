@@ -215,7 +215,7 @@ elif [ "$1" = "openbsd" ]; then
  ext="so"
  if [ "$2" = "x86_64" ]; then
   x86_64
-  86_64avx2
+  x86_64avx2
   cd libs
   zip ../../openblas-obsd.zip *
  else

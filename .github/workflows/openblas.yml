@@ -248,7 +248,7 @@ jobs:
 # openbsd --------------------------------------------------------------
  obopenbsd:
   name: OPENBLAS (OpenBSD cross-platform-actions)
-  needs: all
+#  needs: all
   runs-on: ubuntu-latest
   steps:
    - name: Checkout Git repository
