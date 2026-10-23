@@ -15,8 +15,8 @@ on:
 env:
  RELEASE: ${{ true }}
  WEBHOOK: ${{ false }}
- MAKETARGET: libs netlib shared
-# MAKETARGET: all
+# MAKETARGET: libs netlib shared
+ MAKETARGET: all
 
 jobs:
 
@@ -153,7 +153,7 @@ jobs:
 # rpi64arm -------------------------------------------------------------
  obrpi64arm:
   name: OPENBLAS (Linux arm64)
-  needs: all
+#  needs: all
   runs-on: ubuntu-24.04-arm
   steps:
    - name: Checkout Git repository
