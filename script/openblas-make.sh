@@ -156,7 +156,7 @@ $make \
     FIXED_LIBNAME=1 \
     USE_THREAD=0 \
     -j4 ${MAKETARGET}
-cp libopenblas.${ext} libs/libopenblas-wasm.${ext}
+cp libopenblas.a libs/libopenblas-wasm.a
 }
 
 mkdir -p OpenBLAS/libs
@@ -261,7 +261,7 @@ elif [ "$1" = "wasm" ]; then
  ext="a"
  wasm32
  cd libs
- zip ../../openblas-wasm.zip *
+ zip ../../openblas-wasm32.zip *
  cd -
 else
  echo "argument is linux|windows|darwin|raspberry|android|openbsd|freebsd|wasm"
