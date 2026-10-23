@@ -24,6 +24,27 @@ jobs:
   steps:
     - run: echo "Runall jobs"
 
+ slow:
+  if: false
+  #if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Run slow jobs"
+
+ deprecated:
+  if: false
+  #if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Run deprecated jobs"
+
+ disabled:
+  if: false
+  #if: true
+  runs-on: ubuntu-latest
+  steps:
+    - run: echo "Run disabled jobs"
+
 # windows x64 ----------------------------------------------------------
  jpthreads4wx64:
   name: JPTHREADS4W (Windows x64)
@@ -123,7 +144,7 @@ jobs:
  webhook:
   name: Run Webhook
   if: ${{ false }}
-  runs-on: ubuntu-22.04
+  runs-on: ubuntu-latest
   needs: [jpthreads4wx64, jpthreads4wx86, jpthreads4warm64 ]
   steps:
    - name: update server

@@ -231,6 +231,7 @@ jobs:
       image_additional_mb: 1024
       copy_artifact_path: j64
       commands: |
+       apt-get update
        apt-get install --no-install-recommends -y clang zip git autoconf automake libtool
        export CC=clang
        script/pcre2-build.sh raspberry || exit 1
@@ -274,6 +275,7 @@ jobs:
       image_additional_mb: 1024
       copy_artifact_path: j32
       commands: |
+       apt-get update
        apt-get install --no-install-recommends -y clang zip git autoconf automake libtool
        export CC=clang
        script/pcre2-build.sh raspberry || exit 1
@@ -323,7 +325,7 @@ jobs:
        rm -f jobdone
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
-       sudo pkg_add curl wget zip gmake git automake libtool
+       sudo pkg_add curl wget zip gmake git automake-1.16.5p0 libtool
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
@@ -368,7 +370,7 @@ jobs:
        rm -f jobdone
        sudo pkg_add -u
        sudo rdate time.cloudflare.com || true
-       sudo pkg_add curl wget zip gmake git automake libtool
+       sudo pkg_add curl wget zip gmake git automake-1.16.5p0 libtool
        export CC=clang
        ls -l /usr/local/bin/auto*
        export AUTOMAKE_VERSION=1.15
